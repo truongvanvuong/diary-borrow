@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --animate-duration: 400ms;
+  --animate-delay: 0s;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  @apply text-base;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+.sidebar {
+  @apply fixed z-[100] bg-white h-[calc(100%-2.5rem)];
+}
+/* CSS button */
+.primary {
+  @apply bg-primaryColor border rounded-md shadow-[rgba(0,0,0,0.1)_0_2px_4px_0] box-border text-white cursor-pointer font-normal text-center transition-shadow duration-[150ms,box-shadow] delay-150 select-none touch-manipulation border-solid border-primaryColor;
+  outline: none;
+  outline: 0;
+  -webkit-user-select: none;
+}
+.primary:hover {
+  @apply shadow-[rgba(0,0,0,0.15)_0_3px_9px_0];
+}
+.medium {
+  @apply px-[20px] py-2 text-base;
+}
+.small {
+  @apply px-[10px] py-1.5 text-sm;
+}
+.large {
+  @apply px-[40px] py-2 text-base;
+}
+.disabled {
+  @apply bg-[rgba(51,51,51,0.05)] text-[#333333] !rounded box-border cursor-text select-none touch-manipulation;
+  list-style: none;
+  -webkit-user-select: none;
+}
+.roundedBorder {
+  @apply box-border text-white cursor-pointer text-base opacity-100 select-none touch-manipulation w-fit !rounded-full border-0;
+  outline: 0 solid transparent;
+  -webkit-user-select: none;
+  word-break: break-word;
+}
+.outline {
+  @apply border border-defaultBorder outline-none rounded-md dark:border-defaultBorderDark dark:text-textDark hover:bg-slate-50 transition-colors dark:hover:bg-defaultBorderDark;
+}
+
+/* antd css */
+.ant-btn-primary {
+  @apply bg-primaryColor;
+}
+.ant-message .ant-message-notice-wrapper .ant-message-notice-content {
+  padding: 12px 22px;
+  border-radius: 9999px;
+  background-color: rgba(0, 0, 0, 0.65);
+}
+.ant-modal {
+  @apply md:!w-[800px];
+}

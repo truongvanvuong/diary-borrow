@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .sidebar-hidden {
+    @apply z-[101] fixed bg-white -translate-x-[calc(100%+20px)];
+  }
+  .sidebar {
+    position: initial;
+    @apply h-full translate-x-0;
+  }
+
+  .sidebar-show {
+    @apply translate-x-0;
+  }
+}
