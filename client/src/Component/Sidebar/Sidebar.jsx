@@ -52,7 +52,7 @@ const Sidebar = () => {
     <div>
       {showSidebar && (
         <div
-          className="fixed z-[99] inset-0 bg-[#00000084] duration-300 transition-all"
+          className="fixed z-[99] inset-0 xl:hidden bg-[#00000084] duration-300 transition-all"
           onClick={handleSidebar}
         ></div>
       )}

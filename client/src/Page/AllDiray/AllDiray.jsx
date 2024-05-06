@@ -4,6 +4,7 @@ import { HeadingPage, Table } from "../../Component/index.js";
 
 const AllDiray = () => {
   const { data, loading } = useFetch(`${BASE_URL}/`);
+
   return (
     <div>
       <HeadingPage title="Toàn bộ " />
