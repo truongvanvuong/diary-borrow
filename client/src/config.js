@@ -1,1 +1,1 @@
-export const BASE_URL = "https://diary-borrow-server.onrender.com/api/diary";
+export const BASE_URL = import.meta.env.VITE_BASE_URL;

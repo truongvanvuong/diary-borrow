@@ -10,7 +10,6 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import Tippy from "@tippyjs/react";
 import axios from "axios";
 
-import useFetch from "../../Hook/useFetch.js";
 import { BASE_URL } from "../../config.js";
 import formatDate from "../../Utils/formattedDate.js";
 import { Context } from "../../App.jsx";
