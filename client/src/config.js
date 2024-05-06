@@ -1,1 +1,1 @@
-export const BASE_URL = "http://localhost:1997/api/diary";
+export const BASE_URL = "https://diary-borrow-server.onrender.com/api/diary";
