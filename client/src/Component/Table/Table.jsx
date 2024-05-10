@@ -70,7 +70,7 @@ const columns = [
   },
 ];
 
-const Table = ({ data, loading }) => {
+const Table = ({ data }) => {
   const [dataItem, setDataItem] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [loadingModal, setLoadingModal] = useState(false);
@@ -107,12 +107,12 @@ const Table = ({ data, loading }) => {
     const cancel = (e) => {};
     return (
       <div className="flex items-center gap-3 justify-center text-[20px] text-secondaryText">
-        <Tippy content="Chỉnh sửa" placement="top">
+        <Tippy content="Chỉnh sửa" placement="top" touch="hold">
           <div className="cursor-pointer" onClick={() => handleOpenModal(id)}>
             <AiFillEdit className=" dark:text-textDark" />
           </div>
         </Tippy>
-        <Tippy content="Xóa" placement="top">
+        <Tippy content="Xóa" placement="top" touch="hold">
           <div>
             <Popconfirm
               icon={<QuestionOutlined className="!text-primaryColor" />}
@@ -236,6 +236,5 @@ const Table = ({ data, loading }) => {
 };
 Table.propTypes = {
   data: PropTypes.array,
-  loading: PropTypes.bool,
 };
 export default Table;

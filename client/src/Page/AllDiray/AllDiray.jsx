@@ -9,7 +9,7 @@ const AllDiray = () => {
     <div>
       <HeadingPage title="Toàn bộ " />
       <div>
-        <Table data={data} loading={loading} />
+        <Table data={data} />
       </div>
     </div>
   );

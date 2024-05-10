@@ -19,7 +19,11 @@ const HeadingPage = ({ title }) => {
         {title}
       </h1>
       <div>
-        <Tippy content="Ghi Thêm" theme={isDarkMode ? "dark" : "light"}>
+        <Tippy
+          content="Ghi Thêm"
+          theme={isDarkMode ? "dark" : "light"}
+          touch="hold"
+        >
           <div
             className="w-10 h-10 md:w-12 md:h-12 border border-defaultBorder dark:border-defaultBorderDark shadow-sm rounded-full flex justify-center items-center cursor-pointer"
             onClick={handleOpenModal}
