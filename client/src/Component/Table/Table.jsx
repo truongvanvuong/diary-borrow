@@ -2,11 +2,7 @@ import { useState, useContext } from "react";
 import PropTypes from "prop-types";
 
 import { Table as TableAntd, Switch, Popconfirm } from "antd";
-import {
-  SyncOutlined,
-  QuestionOutlined,
-  LoadingOutlined,
-} from "@ant-design/icons";
+import { SyncOutlined, QuestionOutlined } from "@ant-design/icons";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import Tippy from "@tippyjs/react";
 import axios from "axios";
@@ -181,7 +177,7 @@ const Table = ({ data }) => {
       </div>
     );
   };
-  const dataSource = data.map((item) => ({
+  const dataSource = data?.map((item) => ({
     key: item._id,
     storeName: item.storeName,
     types: item.loan ? "Cho vay" : "Vay mượn",
@@ -202,16 +198,6 @@ const Table = ({ data }) => {
   return (
     <div className="px-5 my-5">
       <TableAntd
-        loading={{
-          indicator: (
-            <LoadingOutlined
-              style={{
-                fontSize: 36,
-              }}
-            />
-          ),
-          spinning: loading,
-        }}
         bordered
         size="large"
         columns={columns}
