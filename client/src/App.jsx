@@ -1,7 +1,6 @@
-import { createContext, useState, useReducer } from "react";
+import { createContext, useState } from "react";
 import Routers from "./Router";
 
-import { reducer, initialState } from "./Utils/reducer.js";
 import { ConfigProvider, theme } from "antd";
 import vi_VN from "antd/lib/locale/vi_VN.js";
 
@@ -14,9 +13,8 @@ import "./App.css";
 const Context = createContext();
 
 const App = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const config = {
     token: {
@@ -36,10 +34,8 @@ const App = () => {
       value={{
         isDarkMode,
         setIsDarkMode,
-        openModal,
-        setOpenModal,
-        state,
-        dispatch,
+        success,
+        setSuccess,
       }}
     >
       <ConfigProvider locale={vi_VN} theme={config}>

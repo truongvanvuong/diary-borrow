@@ -52,7 +52,7 @@ const Sidebar = () => {
     <div>
       {showSidebar && (
         <div
-          className="fixed z-[99] inset-0 bg-[#00000084] duration-300 transition-all"
+          className="fixed z-[99] inset-0 xl:hidden bg-[#00000084] duration-300 transition-all"
           onClick={handleSidebar}
         ></div>
       )}
@@ -72,7 +72,7 @@ const Sidebar = () => {
               </figure>
             </div>
             <div>
-              <ul className="flex flex-col gap-2">
+              <ul className="flex flex-col gap-1 sm:gap-2">
                 {navs.map((item, index) => {
                   return (
                     <li key={index}>
@@ -80,11 +80,11 @@ const Sidebar = () => {
                         to={item.path}
                         className={(navClass) =>
                           navClass.isActive
-                            ? "bg-separator dark:bg-defaultBorderDark flex flex-col items-center gap-2 px-6 py-2 border-r-4 border-primaryColor transition-all duration-[500ms]"
-                            : "hover:bg-layoutBackground dark:hover:bg-separatorDark flex flex-col items-center gap-2 px-6 py-2 border-r-4 border-transparent"
+                            ? "bg-separator dark:bg-defaultBorderDark flex flex-col items-center gap-1 sm:gap-2 px-6 sm:py-2 py-1 border-r-4 border-primaryColor transition-all duration-[500ms]"
+                            : "hover:bg-separator dark:hover:bg-separatorDark flex flex-col items-center gap-1 sm:gap-2 px-6 sm:py-2 py-1 border-r-4 border-transparent transition-all duration-[500ms]"
                         }
                       >
-                        <span className="dark:text-textDark text-[1.2rem] text-secondaryText">
+                        <span className="dark:text-textDark text-[0.9rem] sm:text-[1.2rem] text-secondaryText">
                           {item.icon}
                         </span>
                         <span className="dark:text-textDark text-[0.85rem] font-medium text-secondaryText w-max animate__animated animate__fadeIn">

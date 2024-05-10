@@ -1,19 +1,16 @@
 import PropTypes from "prop-types";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Context } from "../../App.jsx";
 
 import { PlusOutlined } from "@ant-design/icons";
 import Tippy from "@tippyjs/react";
+
+import Modal from "../Modal";
+
 const HeadingPage = ({ title }) => {
-  const { isDarkMode, setOpenModal, dispatch } = useContext(Context);
+  const { isDarkMode } = useContext(Context);
+  const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => {
-    dispatch({
-      type: "add",
-      payload: {
-        title: "Thêm dữ liệu",
-        btnText: "Thêm",
-      },
-    });
     setOpenModal(true);
   };
   return (
@@ -22,7 +19,11 @@ const HeadingPage = ({ title }) => {
         {title}
       </h1>
       <div>
-        <Tippy content="Ghi Thêm" theme={isDarkMode ? "dark" : "light"}>
+        <Tippy
+          content="Ghi Thêm"
+          theme={isDarkMode ? "dark" : "light"}
+          touch="hold"
+        >
           <div
             className="w-10 h-10 md:w-12 md:h-12 border border-defaultBorder dark:border-defaultBorderDark shadow-sm rounded-full flex justify-center items-center cursor-pointer"
             onClick={handleOpenModal}
@@ -31,6 +32,12 @@ const HeadingPage = ({ title }) => {
           </div>
         </Tippy>
       </div>
+      <Modal
+        action="add"
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        title="Thêm dữ liệu"
+      />
     </div>
   );
 };

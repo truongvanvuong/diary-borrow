@@ -1,20 +1,18 @@
 import { useState, useContext } from "react";
+import PropTypes from "prop-types";
 
 import { Table as TableAntd, Switch, Popconfirm } from "antd";
-import {
-  SyncOutlined,
-  QuestionOutlined,
-  LoadingOutlined,
-} from "@ant-design/icons";
+import { SyncOutlined, QuestionOutlined } from "@ant-design/icons";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import Tippy from "@tippyjs/react";
 import axios from "axios";
 
 import { BASE_URL } from "../../config.js";
 import formatDate from "../../Utils/formattedDate.js";
-import { Context } from "../../App.jsx";
 import message from "../../Utils/message.js";
+import Modal from "../Modal";
 
+import { Context } from "../../App.jsx";
 const columns = [
   {
     title: "Tên cửa hàng",
@@ -68,43 +66,49 @@ const columns = [
   },
 ];
 
-const Table = ({ data, loading }) => {
+const Table = ({ data }) => {
+  const [dataItem, setDataItem] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [loadingModal, setLoadingModal] = useState(false);
+  const { setSuccess } = useContext(Context);
+
   const ActionColumn = ({ id }) => {
-    const { setOpenModal, dispatch } = useContext(Context);
-    const handleOpenModal = (_id) => {
-      dispatch({
-        type: "update",
-        payload: {
-          title: "Cập nhật dữ liệu",
-          btnText: "Cập nhật",
-          id: _id,
-        },
-      });
+    const handleOpenModal = async (_id) => {
+      setLoadingModal(true);
       setOpenModal(true);
+      try {
+        const res = await axios.get(`${BASE_URL}/${_id}`);
+        const result = res.data;
+        setDataItem(result.data);
+        setLoadingModal(false);
+      } catch (error) {
+        setError(error.message);
+      }
     };
 
     const confirm = async (e) => {
       const response = await axios.delete(`${BASE_URL}/${id}`);
       const { data } = response;
       if (data.success) {
+        setSuccess(true);
         setTimeout(() => {
           message("success", "Đã xóa thành công");
-        }, 500);
+        }, 1000);
       } else {
         setTimeout(() => {
           message("error", "Lỗi, dữ liệu chưa được xóa");
-        }, 500);
+        }, 1000);
       }
     };
     const cancel = (e) => {};
     return (
       <div className="flex items-center gap-3 justify-center text-[20px] text-secondaryText">
-        <Tippy content="Chỉnh sửa" placement="top">
+        <Tippy content="Chỉnh sửa" placement="top" touch="hold">
           <div className="cursor-pointer" onClick={() => handleOpenModal(id)}>
             <AiFillEdit className=" dark:text-textDark" />
           </div>
         </Tippy>
-        <Tippy content="Xóa" placement="top">
+        <Tippy content="Xóa" placement="top" touch="hold">
           <div>
             <Popconfirm
               icon={<QuestionOutlined className="!text-primaryColor" />}
@@ -137,6 +141,7 @@ const Table = ({ data, loading }) => {
 
       const { data } = response;
       if (data.success) {
+        setSuccess(true);
         setTimeout(() => {
           message("success", "Trạng thái đã được thay đổi");
         }, 1000);
@@ -172,7 +177,7 @@ const Table = ({ data, loading }) => {
       </div>
     );
   };
-  const dataSource = data.map((item) => ({
+  const dataSource = data?.map((item) => ({
     key: item._id,
     storeName: item.storeName,
     types: item.loan ? "Cho vay" : "Vay mượn",
@@ -193,16 +198,6 @@ const Table = ({ data, loading }) => {
   return (
     <div className="px-5 my-5">
       <TableAntd
-        loading={{
-          indicator: (
-            <LoadingOutlined
-              style={{
-                fontSize: 36,
-              }}
-            />
-          ),
-          spinning: loading,
-        }}
         bordered
         size="large"
         columns={columns}
@@ -214,7 +209,18 @@ const Table = ({ data, loading }) => {
           x: "max-content",
         }}
       />
+      <Modal
+        action="update"
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        dataItem={dataItem}
+        loading={loadingModal}
+        title="Cập nhật dữ liệu"
+      />
     </div>
   );
+};
+Table.propTypes = {
+  data: PropTypes.array,
 };
 export default Table;
