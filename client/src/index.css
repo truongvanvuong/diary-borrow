@@ -4,7 +4,7 @@
 
 @layer utilities {
   .sidebar-hidden {
-    @apply z-[101] fixed bg-white -translate-x-[calc(100%+20px)];
+    @apply z-[101] fixed bg-white -translate-x-full;
   }
   .sidebar {
     position: initial;

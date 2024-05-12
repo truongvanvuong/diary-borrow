@@ -59,7 +59,7 @@ const Sidebar = () => {
       <aside
         className={`xl:sidebar sidebar-hidden ${
           showSidebar && "sidebar-show"
-        } transition-transform duration-300 h-[calc(100%-2.5rem)] border border-defaultBorder dark:border-defaultBorderDark dark:bg-gray rounded-xl shadow-xl`}
+        } transition-transform duration-300 h-full xl:h-[calc(100%-2.5rem)] border border-defaultBorder dark:border-defaultBorderDark dark:bg-gray xl:rounded-xl shadow-xl`}
       >
         <div className="relative h-full">
           <div className="my-4 h-[calc(100%-2rem)] w-24 flex flex-col justify-between">
@@ -72,7 +72,7 @@ const Sidebar = () => {
               </figure>
             </div>
             <div>
-              <ul className="flex flex-col gap-1 sm:gap-2">
+              <ul className="flex flex-col gap-1 tall:gap-2">
                 {navs.map((item, index) => {
                   return (
                     <li key={index}>
@@ -80,11 +80,11 @@ const Sidebar = () => {
                         to={item.path}
                         className={(navClass) =>
                           navClass.isActive
-                            ? "bg-separator dark:bg-defaultBorderDark flex flex-col items-center gap-1 sm:gap-2 px-6 sm:py-2 py-1 border-r-4 border-primaryColor transition-all duration-[500ms]"
-                            : "hover:bg-separator dark:hover:bg-separatorDark flex flex-col items-center gap-1 sm:gap-2 px-6 sm:py-2 py-1 border-r-4 border-transparent transition-all duration-[500ms]"
+                            ? "bg-separator dark:bg-defaultBorderDark flex flex-col items-center gap-1 tall:gap-2 px-6 tall:py-2 py-1 border-r-4 border-primaryColor transition-all duration-[500ms]"
+                            : "hover:bg-separator dark:hover:bg-separatorDark flex flex-col items-center gap-1 tall:gap-2 px-6 tall:py-2 py-1 border-r-4 border-transparent transition-all duration-[500ms]"
                         }
                       >
-                        <span className="dark:text-textDark text-[0.9rem] sm:text-[1.2rem] text-secondaryText">
+                        <span className="dark:text-textDark text-[0.9rem] tall:text-[1.2rem] text-secondaryText">
                           {item.icon}
                         </span>
                         <span className="dark:text-textDark text-[0.85rem] font-medium text-secondaryText w-max animate__animated animate__fadeIn">
@@ -116,7 +116,7 @@ const Sidebar = () => {
           </div>
         </div>
         <div
-          className="bg-white p-2 xl:hidden shadow-xl rounded-md cursor-pointer absolute top-6 translate-x-24 dark:bg-gray border border-defaultBorder dark:border-defaultBorderDark dark:text-textDark"
+          className="bg-white p-2 xl:hidden shadow-xl rounded-md cursor-pointer absolute top-16 translate-x-24 dark:bg-gray border border-defaultBorder dark:border-defaultBorderDark dark:text-textDark"
           onClick={handleSidebar}
         >
           {showSidebar ? (

@@ -31,7 +31,8 @@ export default {
 
         xl: "1280px",
 
-        "2xl": "1536px",
+        xxl: "1536px",
+        tall: { raw: "(min-height: 400px)" },
       },
     },
   },

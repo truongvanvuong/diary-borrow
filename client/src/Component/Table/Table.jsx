@@ -1,8 +1,19 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 
-import { Table as TableAntd, Switch, Popconfirm } from "antd";
-import { SyncOutlined, QuestionOutlined } from "@ant-design/icons";
+import {
+  Table as TableAntd,
+  Switch,
+  Popconfirm,
+  Button,
+  Input,
+  Space,
+} from "antd";
+import {
+  SyncOutlined,
+  QuestionOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import Tippy from "@tippyjs/react";
 import axios from "axios";
@@ -13,64 +24,114 @@ import message from "../../Utils/message.js";
 import Modal from "../Modal";
 
 import { Context } from "../../App.jsx";
-const columns = [
-  {
-    title: "Tên cửa hàng",
-    dataIndex: "storeName",
-  },
-  {
-    title: "Hình thức",
-    dataIndex: "types",
-  },
-  {
-    title: "Vật phẩm",
-    dataIndex: "item",
-  },
-  {
-    title: "Số lượng",
-    dataIndex: "quantity",
-    sorter: (a, b) => a.quantity - b.quantity,
-    width: 100,
-  },
-  {
-    title: "Đơn vị",
-    dataIndex: "unit",
-  },
-  {
-    title: "Ngày vay",
-    dataIndex: "BorrowingDate",
-  },
-  {
-    title: "Ngày trả",
-    dataIndex: "returnDate",
-  },
-  {
-    title: "Trạng thái",
-    dataIndex: "status",
-    filters: [
-      {
-        text: "Chưa trả",
-        value: false,
-      },
-      {
-        text: "Đã trả",
-        value: true,
-      },
-    ],
-    onFilter: (value, record) => record.status.props.returned === value,
-  },
-  {
-    title: "Hành động",
-    dataIndex: "aciton",
-    align: "center",
-  },
-];
 
 const Table = ({ data }) => {
   const [dataItem, setDataItem] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [loadingModal, setLoadingModal] = useState(false);
   const { setSuccess } = useContext(Context);
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
+  const searchInput = useRef(null);
+
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+  const handleReset = (clearFilters) => {
+    clearFilters();
+    setSearchText("");
+  };
+  const getColumnSearchProps = (dataIndex) => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+      close,
+    }) => (
+      <div
+        style={{
+          padding: 8,
+        }}
+        onKeyDown={(e) => e.stopPropagation()}
+      >
+        <Input
+          ref={searchInput}
+          placeholder="Nhập từ khóa"
+          value={selectedKeys[0]}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{
+            marginBottom: 8,
+            display: "block",
+          }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Tìm kiếm
+          </Button>
+          <Button
+            onClick={() => clearFilters && handleReset(clearFilters)}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Bỏ tìm kiếm
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              confirm({
+                closeDropdown: false,
+              });
+              setSearchText(selectedKeys[0]);
+              setSearchedColumn(dataIndex);
+            }}
+          >
+            Lọc
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              close();
+            }}
+          >
+            Đóng
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered) => (
+      <SearchOutlined
+        style={{
+          color: filtered ? "#1677ff" : undefined,
+        }}
+      />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+    onFilterDropdownOpenChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+    render: (text) => (searchedColumn === dataIndex ? text : text),
+  });
 
   const ActionColumn = ({ id }) => {
     const handleOpenModal = async (_id) => {
@@ -177,6 +238,60 @@ const Table = ({ data }) => {
       </div>
     );
   };
+  const columns = [
+    {
+      title: "Tên cửa hàng",
+      dataIndex: "storeName",
+      ...getColumnSearchProps("storeName"),
+    },
+    {
+      title: "Hình thức",
+      dataIndex: "types",
+    },
+    {
+      title: "Vật phẩm",
+      dataIndex: "item",
+      ...getColumnSearchProps("item"),
+    },
+    {
+      title: "Số lượng",
+      dataIndex: "quantity",
+      sorter: (a, b) => a.quantity - b.quantity,
+      width: 100,
+    },
+    {
+      title: "Đơn vị",
+      dataIndex: "unit",
+    },
+    {
+      title: "Ngày vay",
+      dataIndex: "BorrowingDate",
+    },
+    {
+      title: "Ngày trả",
+      dataIndex: "returnDate",
+    },
+    {
+      title: "Trạng thái",
+      dataIndex: "status",
+      filters: [
+        {
+          text: "Chưa trả",
+          value: false,
+        },
+        {
+          text: "Đã trả",
+          value: true,
+        },
+      ],
+      onFilter: (value, record) => record.status.props.returned === value,
+    },
+    {
+      title: "Hành động",
+      dataIndex: "aciton",
+      align: "center",
+    },
+  ];
   const dataSource = data?.map((item) => ({
     key: item._id,
     storeName: item.storeName,
