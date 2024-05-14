@@ -147,7 +147,7 @@ const Table = ({ data }) => {
       }
     };
 
-    const confirm = async (e) => {
+    const confirm = async () => {
       const response = await axios.delete(`${BASE_URL}/${id}`);
       const { data } = response;
       if (data.success) {
@@ -314,7 +314,7 @@ const Table = ({ data }) => {
     <div className="px-5 my-5">
       <TableAntd
         bordered
-        size="large"
+        size="middle"
         columns={columns}
         dataSource={dataSource}
         pagination={false}
@@ -323,6 +323,7 @@ const Table = ({ data }) => {
           y: "calc(100vh - 15rem)",
           x: "max-content",
         }}
+        className="!text-[10rem]"
       />
       <Modal
         action="update"

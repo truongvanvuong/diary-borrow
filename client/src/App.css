@@ -61,10 +61,12 @@ body {
   @apply bg-primaryColor;
 }
 .ant-message .ant-message-notice-wrapper .ant-message-notice-content {
-  padding: 12px 22px;
-  border-radius: 9999px;
-  background-color: rgba(0, 0, 0, 0.65);
+  @apply py-[10px] px-3 md:py-3 md:px-4  bg-[rgba(0,0,0,0.65)] rounded-full shadow-md;
 }
 .ant-modal {
   @apply md:!w-[800px];
+}
+:where(.css-dev-only-do-not-override-1t3tqoq).ant-table-wrapper
+  .ant-table.ant-table-middle {
+  @apply text-[0.75rem] md:text-[0.8rem] xl:text-[0.9rem];
 }
