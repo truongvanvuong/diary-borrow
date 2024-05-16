@@ -437,6 +437,6 @@ Modal.propTypes = {
   action: PropTypes.string,
   title: PropTypes.string,
   loading: PropTypes.bool,
-  dataItem: PropTypes.array,
+  dataItem: PropTypes.object,
 };
 export default Modal;

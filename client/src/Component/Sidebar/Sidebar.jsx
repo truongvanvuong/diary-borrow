@@ -59,7 +59,7 @@ const Sidebar = () => {
       <aside
         className={`xl:sidebar sidebar-hidden ${
           showSidebar && "sidebar-show"
-        } transition-transform duration-300 h-full xl:h-[calc(100%-2.5rem)] border border-defaultBorder dark:border-defaultBorderDark dark:bg-gray xl:rounded-xl shadow-xl`}
+        } transition-transform duration-300 xl:h-[calc(100%-2.5rem)] border border-defaultBorder dark:border-defaultBorderDark dark:bg-gray rounded-xl shadow-xl`}
       >
         <div className="relative h-full">
           <div className="my-4 h-[calc(100%-2rem)] w-24 flex flex-col justify-between">

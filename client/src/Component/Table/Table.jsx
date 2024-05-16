@@ -1,6 +1,6 @@
 import { useState, useContext, useRef } from "react";
 import PropTypes from "prop-types";
-
+import dayjs from "dayjs";
 import {
   Table as TableAntd,
   Switch,
@@ -26,14 +26,14 @@ import Modal from "../Modal";
 import { Context } from "../../App.jsx";
 
 const Table = ({ data }) => {
-  const [dataItem, setDataItem] = useState([]);
+  const currentDate = dayjs();
+  const [dataItem, setDataItem] = useState({});
   const [openModal, setOpenModal] = useState(false);
   const [loadingModal, setLoadingModal] = useState(false);
   const { setSuccess } = useContext(Context);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
-
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -198,6 +198,7 @@ const Table = ({ data }) => {
     const confirm = async (e) => {
       const response = await axios.put(`${BASE_URL}/${id}`, {
         returned: checked,
+        returnDate: currentDate,
       });
 
       const { data } = response;
