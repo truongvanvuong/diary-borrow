@@ -312,7 +312,7 @@ const Table = ({ data }) => {
     aciton: <ActionColumn id={item._id} />,
   }));
   return (
-    <div className="px-5 my-5">
+    <div className="px-5 my-5 p-">
       <TableAntd
         bordered
         size="middle"
@@ -321,10 +321,9 @@ const Table = ({ data }) => {
         pagination={false}
         scroll={{
           scrollToFirstRowOnChange: true,
-          y: "calc(100vh - 15rem)",
+          y: "calc(100vh - 202px)",
           x: "max-content",
         }}
-        className="!text-[10rem]"
       />
       <Modal
         action="update"

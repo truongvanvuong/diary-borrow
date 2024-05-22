@@ -56,6 +56,9 @@ body {
   @apply border border-defaultBorder outline-none rounded-md dark:border-defaultBorderDark dark:text-textDark hover:bg-slate-50 transition-colors dark:hover:bg-defaultBorderDark;
 }
 
+.sideber-body {
+  overflow-y: overlay;
+}
 /* antd css */
 .ant-btn-primary {
   @apply bg-primaryColor;

@@ -62,7 +62,7 @@ const Sidebar = () => {
         } transition-transform duration-300 xl:h-[calc(100%-2.5rem)] border border-defaultBorder dark:border-defaultBorderDark dark:bg-gray rounded-xl shadow-xl`}
       >
         <div className="relative h-full">
-          <div className="my-4 h-[calc(100%-2rem)] w-24 flex flex-col justify-between">
+          <div className="my-4 h-[calc(100%-2rem)] w-24 flex flex-col justify-between sideber-body">
             <div className="mx-auto">
               <figure className="w-[56px] h-[56px] rounded-full border border-solid border-defaultBorder flex items-center justify-center overflow-hidden">
                 <img
@@ -72,7 +72,7 @@ const Sidebar = () => {
               </figure>
             </div>
             <div>
-              <ul className="flex flex-col gap-1 tall:gap-2">
+              <ul className="flex flex-col gap-2">
                 {navs.map((item, index) => {
                   return (
                     <li key={index}>
@@ -80,11 +80,11 @@ const Sidebar = () => {
                         to={item.path}
                         className={(navClass) =>
                           navClass.isActive
-                            ? "bg-separator dark:bg-defaultBorderDark flex flex-col items-center gap-1 tall:gap-2 px-6 tall:py-2 py-1 border-r-4 border-primaryColor transition-all duration-[500ms]"
-                            : "hover:bg-separator dark:hover:bg-separatorDark flex flex-col items-center gap-1 tall:gap-2 px-6 tall:py-2 py-1 border-r-4 border-transparent transition-all duration-[500ms]"
+                            ? "bg-separator dark:bg-defaultBorderDark flex flex-col items-center gap-2 px-6 py-2 border-r-4 border-primaryColor transition-all duration-[500ms]"
+                            : "hover:bg-separator dark:hover:bg-separatorDark flex flex-col items-center gap-2 px-6 py-2 border-r-4 border-transparent transition-all duration-[500ms]"
                         }
                       >
-                        <span className="dark:text-textDark text-[0.9rem] tall:text-[1.2rem] text-secondaryText">
+                        <span className="dark:text-textDark text-[0.9rem] md:text-[1.2rem] text-secondaryText">
                           {item.icon}
                         </span>
                         <span className="dark:text-textDark text-[0.85rem] font-medium text-secondaryText w-max animate__animated animate__fadeIn">
