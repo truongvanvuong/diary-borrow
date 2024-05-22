@@ -11,7 +11,10 @@ const app = express();
 const port = process.env.PORT;
 
 const corsOptions = {
-  origin: true,
+  origin: [
+    'http://localhost:5173/',
+    'https://diary-borrow-vanvuong.netlify.app/',
+  ],
   credentials: true,
 };
 
