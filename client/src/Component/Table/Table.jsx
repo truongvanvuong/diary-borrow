@@ -231,7 +231,6 @@ const Table = ({ data }) => {
         >
           <Switch
             size="medium"
-            className="bg-defaultBorder"
             onChange={handleUpdateStatus}
             checked={checked}
           />

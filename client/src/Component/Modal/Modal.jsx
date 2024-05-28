@@ -173,6 +173,17 @@ const Modal = ({
               `Dữ liệu đã được ${action === "add" ? "Thêm" : "Cập nhật"}`
             );
           }, 1000);
+          setFormData({
+            storeName: "",
+            item: "",
+            quantity: "",
+            returned: false,
+            unit: "",
+            loanDate: currentDate,
+            returnDate: null,
+            loan: false,
+            borrow: false,
+          });
         } else {
         }
       } catch (error) {

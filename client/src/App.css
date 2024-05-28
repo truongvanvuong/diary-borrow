@@ -60,9 +60,6 @@ body {
   overflow-y: overlay;
 }
 /* antd css */
-.ant-btn-primary {
-  @apply bg-primaryColor;
-}
 .ant-message .ant-message-notice-wrapper .ant-message-notice-content {
   @apply py-[10px] px-3 md:py-3 md:px-4  bg-[rgba(0,0,0,0.65)] rounded-full shadow-md;
 }

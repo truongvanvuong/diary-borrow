@@ -104,7 +104,6 @@ const Sidebar = () => {
               >
                 <Switch
                   size="medium"
-                  className="bg-defaultBorder"
                   onChange={handleChange}
                   checked={isDarkMode}
                   checkedChildren={<MoonFilled />}
