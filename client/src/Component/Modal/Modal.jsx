@@ -62,7 +62,7 @@ const Modal = ({
 }) => {
   const { setSuccess } = useContext(Context);
   const currentDate = dayjs();
-  const [valueRadio, setValueRadio] = useState();
+  const [valueRadio, setValueRadio] = useState("");
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [checked, setChecked] = useState(false);
@@ -135,6 +135,23 @@ const Modal = ({
       setErrors((prev) => ({ ...prev, [e.target.id]: false }));
     }
   };
+  const handleCancel = () => {
+    setFormData({
+      storeName: "",
+      item: "",
+      quantity: "",
+      returned: false,
+      unit: "",
+      loanDate: currentDate,
+      returnDate: null,
+      loan: false,
+      borrow: false,
+    });
+    setValueRadio("");
+    setOpenModal(false);
+    setConfirmLoading(false);
+    setErrors({});
+  };
   const handleOk = async () => {
     const newErrors = {
       storeName: !formData.storeName ? "Nhập tên cửa hàng" : null,
@@ -173,18 +190,7 @@ const Modal = ({
               `Dữ liệu đã được ${action === "add" ? "Thêm" : "Cập nhật"}`
             );
           }, 1000);
-          setFormData({
-            storeName: "",
-            item: "",
-            quantity: "",
-            returned: false,
-            unit: "",
-            loanDate: currentDate,
-            returnDate: null,
-            loan: false,
-            borrow: false,
-          });
-        } else {
+          handleCancel();
         }
       } catch (error) {
         console.log(error);
@@ -192,25 +198,8 @@ const Modal = ({
     }
   };
 
-  const handleCancel = () => {
-    setFormData({
-      storeName: "",
-      item: "",
-      quantity: "",
-      returned: false,
-      unit: "",
-      loanDate: currentDate,
-      returnDate: null,
-      loan: false,
-      borrow: false,
-    });
-    setValueRadio();
-    setOpenModal(false);
-    setConfirmLoading(false);
-    setErrors({});
-  };
-
   const onChangeSelect = (value) => {
+    setErrors((prev) => ({ ...prev, unit: false }));
     setFormData((prev) => ({ ...prev, unit: value }));
   };
   const disabledLoanDate = (current) => {
