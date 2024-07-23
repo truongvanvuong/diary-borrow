@@ -55,10 +55,11 @@ const selectOption = [
 const Modal = ({
   openModal,
   setOpenModal,
-  action,
+  mode,
   title,
   loading,
   dataItem,
+  refresh,
 }) => {
   const { setSuccess } = useContext(Context);
   const currentDate = dayjs();
@@ -173,23 +174,23 @@ const Modal = ({
       setConfirmLoading(true);
       try {
         const response = await axios({
-          method: `${action === "add" ? "post" : "put"}`,
+          method: `${mode === "add" ? "post" : "put"}`,
           url: `${
-            action === "add" ? BASE_URL + "/" : BASE_URL + "/" + dataItem._id
+            mode === "add" ? BASE_URL + "/" : BASE_URL + "/" + dataItem._id
           }`,
           data: formData,
         });
         const { data } = response;
         if (data.success) {
-          setSuccess(true);
           setTimeout(() => {
             setConfirmLoading(false);
             setOpenModal(false);
             message(
               "success",
-              `Dữ liệu đã được ${action === "add" ? "Thêm" : "Cập nhật"}`
+              `Dữ liệu đã được ${mode === "add" ? "Thêm" : "Cập nhật"}`
             );
           }, 1000);
+          refresh();
           handleCancel();
         }
       } catch (error) {
@@ -205,7 +206,7 @@ const Modal = ({
   const disabledLoanDate = (current) => {
     // Không thể chọn các ngày sau ngày trả
     return (
-      action !== "add" && checked && dayjs(current).isAfter(formData.returnDate)
+      mode !== "add" && checked && dayjs(current).isAfter(formData.returnDate)
     );
   };
 
@@ -286,7 +287,7 @@ const Modal = ({
                 messError={errors.quantity}
               />
             </div>
-            {action == "update" && (
+            {mode == "update" && (
               <div>
                 <label
                   className="dark:text-textDark text-[0.9rem] md:text-[1rem]"
@@ -379,7 +380,7 @@ const Modal = ({
                 )}
               </div>
             </div>
-            {action === "update" && (
+            {mode === "update" && (
               <Tippy
                 content="Vật phẩm chưa trả lại không thể thay đổi ngày trả"
                 onShow={() => (!checked ? true : false)}
@@ -434,9 +435,10 @@ const Modal = ({
 Modal.propTypes = {
   openModal: PropTypes.bool,
   setOpenModal: PropTypes.func,
-  action: PropTypes.string,
+  mode: PropTypes.string,
   title: PropTypes.string,
   loading: PropTypes.bool,
   dataItem: PropTypes.object,
+  refresh: PropTypes.func,
 };
 export default Modal;

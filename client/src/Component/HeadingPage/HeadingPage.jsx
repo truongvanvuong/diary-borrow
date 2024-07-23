@@ -7,7 +7,7 @@ import Tippy from "@tippyjs/react";
 
 import Modal from "../Modal";
 
-const HeadingPage = ({ title }) => {
+const HeadingPage = ({ title, refresh }) => {
   const { isDarkMode } = useContext(Context);
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => {
@@ -33,7 +33,8 @@ const HeadingPage = ({ title }) => {
         </Tippy>
       </div>
       <Modal
-        action="add"
+        refresh={refresh}
+        mode="add"
         openModal={openModal}
         setOpenModal={setOpenModal}
         title="Thêm dữ liệu"
@@ -44,6 +45,7 @@ const HeadingPage = ({ title }) => {
 
 HeadingPage.propTypes = {
   title: PropTypes.string.isRequired,
+  refresh: PropTypes.func,
 };
 
 export default HeadingPage;

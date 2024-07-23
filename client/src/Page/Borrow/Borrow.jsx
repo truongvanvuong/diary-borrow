@@ -4,17 +4,17 @@ import { BASE_URL } from "../../config.js";
 import { Spin } from "antd";
 
 const Borrow = () => {
-  const { data, loading } = useFetch(`${BASE_URL}/borrow`);
+  const { data, loading, refresh } = useFetch(`${BASE_URL}/borrow`);
   return (
     <div>
-      <HeadingPage title="Danh sách vay mượn" />
+      <HeadingPage title="Danh sách vay mượn" refresh={refresh} />
       <div>
         {loading ? (
           <div className="mt-8 text-center">
             <Spin size="large" />
           </div>
         ) : (
-          <Table data={data} />
+          <Table data={data} refresh={refresh} />
         )}
       </div>
     </div>

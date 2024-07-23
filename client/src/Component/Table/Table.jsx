@@ -25,7 +25,7 @@ import Modal from "../Modal";
 
 import { Context } from "../../App.jsx";
 
-const Table = ({ data }) => {
+const Table = ({ data, refresh }) => {
   const currentDate = dayjs();
   const [dataItem, setDataItem] = useState({});
   const [openModal, setOpenModal] = useState(false);
@@ -151,10 +151,10 @@ const Table = ({ data }) => {
       const response = await axios.delete(`${BASE_URL}/${id}`);
       const { data } = response;
       if (data.success) {
-        setSuccess(true);
         setTimeout(() => {
           message("success", "Đã xóa thành công");
         }, 1000);
+        refresh();
       } else {
         setTimeout(() => {
           message("error", "Lỗi, dữ liệu chưa được xóa");
@@ -203,10 +203,10 @@ const Table = ({ data }) => {
 
       const { data } = response;
       if (data.success) {
-        setSuccess(true);
         setTimeout(() => {
           message("success", "Trạng thái đã được thay đổi");
         }, 1000);
+        refresh();
       } else {
         setTimeout(() => {
           message("error", "Trạng thái chưa được thay đổi");
@@ -325,17 +325,19 @@ const Table = ({ data }) => {
         }}
       />
       <Modal
-        action="update"
+        mode="update"
         openModal={openModal}
         setOpenModal={setOpenModal}
         dataItem={dataItem}
         loading={loadingModal}
         title="Cập nhật dữ liệu"
+        refresh={refresh}
       />
     </div>
   );
 };
 Table.propTypes = {
   data: PropTypes.array,
+  refresh: PropTypes.func,
 };
 export default Table;
