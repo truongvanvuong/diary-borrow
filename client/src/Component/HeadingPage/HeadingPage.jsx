@@ -1,13 +1,14 @@
 import PropTypes from "prop-types";
 import { useContext, useEffect, useState } from "react";
-import { Context } from "../../App.jsx";
 import axios from "axios";
-import { Popconfirm } from "antd";
+
+import { Modal as ModalAntd } from "antd";
+import { Context } from "../../App.jsx";
 
 import {
   PlusOutlined,
   DeleteFilled,
-  QuestionOutlined,
+  ExclamationCircleFilled,
 } from "@ant-design/icons";
 import Tippy from "@tippyjs/react";
 
@@ -30,22 +31,33 @@ const HeadingPage = ({ title, refresh, selectedRowKeys }) => {
   }, [selectedRowKeys.length]);
 
   const confirmDeletes = async () => {
-    const response = await axios.delete(`${BASE_URL}/delete-diaries`, {
-      data: { selectedRowKeys },
+    ModalAntd.confirm({
+      title: "Xác nhận xóa?",
+      icon: <ExclamationCircleFilled />,
+      content: `Chắc chắn xóa ${deleteConut} bản ghi đã chọn`,
+      okText: "Xác nhận",
+      okType: "danger",
+      cancelText: "Hủy",
+      async onOk() {
+        const response = await axios.delete(`${BASE_URL}/delete-diaries`, {
+          data: { selectedRowKeys },
+        });
+        const { data } = response;
+        console.log(data);
+        if (data.success) {
+          setDeleteCount(0);
+          setTimeout(() => {
+            message("success", `Đã xóa ${data.deleteCount} bản ghi nhật ký`);
+          }, 1000);
+          refresh();
+        } else {
+          setTimeout(() => {
+            message("error", "Lỗi, dữ liệu chưa được xóa");
+          }, 1000);
+        }
+      },
+      onCancel() {},
     });
-    const { data } = response;
-    console.log(data);
-    if (data.success) {
-      setDeleteCount(0);
-      setTimeout(() => {
-        message("success", `Đã xóa ${data.deleteCount} bản ghi nhật ký`);
-      }, 1000);
-      refresh();
-    } else {
-      setTimeout(() => {
-        message("error", "Lỗi, dữ liệu chưa được xóa");
-      }, 1000);
-    }
   };
 
   return (
@@ -55,19 +67,12 @@ const HeadingPage = ({ title, refresh, selectedRowKeys }) => {
           {title}
         </h1>
         {hasSelected && (
-          <div className="cursor-pointer animate__animated animate__fadeIn">
-            <Popconfirm
-              icon={<QuestionOutlined className="!text-primaryColor" />}
-              title="Xác nhận xóa"
-              placement="bottomRight"
-              description={`Bạn chắc chắn muốn xóa ${deleteConut} bản ghi đã chọn?`}
-              onConfirm={confirmDeletes}
-              okText="OK"
-              cancelText="Hủy"
-            >
-              <DeleteFilled className="dark:text-textDark text-[22px] text-secondaryText" />
-              <span>({deleteConut})</span>
-            </Popconfirm>
+          <div
+            className="cursor-pointer animate__animated animate__fadeIn"
+            onClick={confirmDeletes}
+          >
+            <DeleteFilled className="dark:text-textDark text-[22px] text-secondaryText" />
+            <span>({deleteConut})</span>
           </div>
         )}
       </div>

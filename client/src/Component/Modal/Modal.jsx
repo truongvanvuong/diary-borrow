@@ -218,6 +218,7 @@ const Modal = ({
 
   return (
     <ModalAntd
+      width={800}
       centered
       title={
         <h1 className="text-[1.2rem] md:text-[1.6rem] font-medium text-center dark:text-textHeaddingDark ">
