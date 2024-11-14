@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 
@@ -19,8 +19,6 @@ import Tippy from "@tippyjs/react";
 import { BASE_URL } from "../../config.js";
 
 import dayjs from "dayjs";
-
-import { Context } from "../../App.jsx";
 
 const selectOption = [
   {
@@ -61,7 +59,6 @@ const Modal = ({
   dataItem,
   refresh,
 }) => {
-  const { setSuccess } = useContext(Context);
   const currentDate = dayjs();
   const [valueRadio, setValueRadio] = useState("");
   const [confirmLoading, setConfirmLoading] = useState(false);

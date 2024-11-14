@@ -115,13 +115,13 @@ const Sidebar = () => {
           </div>
         </div>
         <div
-          className="bg-white p-2 xl:hidden shadow-xl rounded-md cursor-pointer absolute top-16 translate-x-24 dark:bg-gray border border-defaultBorder dark:border-defaultBorderDark dark:text-textDark"
+          className="bg-white p-2 xl:hidden shadow-xl rounded-md cursor-pointer absolute top-8 translate-x-24 dark:bg-gray border border-defaultBorder dark:border-defaultBorderDark dark:text-textDark"
           onClick={handleSidebar}
         >
           {showSidebar ? (
-            <MenuFoldOutlined style={{ fontSize: 26 }} />
+            <MenuFoldOutlined style={{ fontSize: 24 }} />
           ) : (
-            <MenuUnfoldOutlined style={{ fontSize: 26 }} />
+            <MenuUnfoldOutlined style={{ fontSize: 24 }} />
           )}
         </div>
       </aside>

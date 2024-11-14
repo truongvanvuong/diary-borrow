@@ -1,4 +1,4 @@
-import { useState, useContext, useRef } from "react";
+import { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
 import {
@@ -23,26 +23,35 @@ import formatDate from "../../Utils/formattedDate.js";
 import message from "../../Utils/message.js";
 import Modal from "../Modal";
 
-import { Context } from "../../App.jsx";
-
-const Table = ({ data, refresh }) => {
+const Table = ({ data, refresh, selectedRowKeys, setSelectedRowKeys }) => {
   const currentDate = dayjs();
   const [dataItem, setDataItem] = useState({});
   const [openModal, setOpenModal] = useState(false);
   const [loadingModal, setLoadingModal] = useState(false);
-  const { setSuccess } = useContext(Context);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
+
+  const onSelectChange = (newSelectedRowKeys) => {
+    setSelectedRowKeys(newSelectedRowKeys);
+  };
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+  };
+
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
     setSearchedColumn(dataIndex);
   };
+
   const handleReset = (clearFilters) => {
     clearFilters();
     setSearchText("");
   };
+
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
       setSelectedKeys,
@@ -125,10 +134,12 @@ const Table = ({ data, refresh }) => {
     ),
     onFilter: (value, record) =>
       record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) {
-        setTimeout(() => searchInput.current?.select(), 100);
-      }
+    filterDropdownProps: {
+      onOpenChange(open) {
+        if (open) {
+          setTimeout(() => searchInput.current?.select(), 100);
+        }
+      },
     },
     render: (text) => (searchedColumn === dataIndex ? text : text),
   });
@@ -311,8 +322,9 @@ const Table = ({ data, refresh }) => {
     aciton: <ActionColumn id={item._id} />,
   }));
   return (
-    <div className="px-5 my-5 p-">
+    <div className="px-5 my-5">
       <TableAntd
+        rowSelection={rowSelection}
         bordered
         size="middle"
         columns={columns}
@@ -337,6 +349,8 @@ const Table = ({ data, refresh }) => {
   );
 };
 Table.propTypes = {
+  selectedRowKeys: PropTypes.array,
+  setSelectedKeys: PropTypes.func,
   data: PropTypes.array,
   refresh: PropTypes.func,
 };
