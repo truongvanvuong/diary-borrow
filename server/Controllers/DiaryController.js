@@ -107,6 +107,29 @@ const deleteDiary = async (req, res) => {
     });
   }
 };
+const deleteDiarys = async (req, res) => {
+  const ids = req.body.selectedRowKeys;
+  console.log(ids);
+  if (!Array.isArray(ids) || ids.length === 0) {
+    return res.status(404).json({
+      success: false,
+      message: 'Danh sách ID không hợp lệ',
+    });
+  }
+  try {
+    const result = await Diary.deleteMany({ _id: { $in: ids } });
+    console.log(result);
+    res.status(200).json({
+      success: true,
+      deleteCount: result.deletedCount,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err,
+    });
+  }
+};
 export {
   createDiary,
   getDiaryLoan,
@@ -115,4 +138,5 @@ export {
   getAllDiary,
   updateDiary,
   deleteDiary,
+  deleteDiarys,
 };

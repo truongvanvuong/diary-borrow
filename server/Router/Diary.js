@@ -6,6 +6,7 @@ import {
   getDiaryBorrow,
   updateDiary,
   deleteDiary,
+  deleteDiarys,
   getSingleDiary,
 } from '../Controllers/DiaryController.js';
 
@@ -14,6 +15,7 @@ const router = express.Router();
 router.get('/', getAllDiary);
 router.get('/loan', getDiaryLoan);
 router.get('/borrow', getDiaryBorrow);
+router.delete('/delete-diaries', deleteDiarys);
 router.get('/:id', getSingleDiary);
 router.post('/', createDiary);
 router.put('/:id', updateDiary);
