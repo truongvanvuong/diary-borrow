@@ -21,13 +21,14 @@ const HeadingPage = ({ title, refresh, selectedRowKeys }) => {
   const { isDarkMode } = useContext(Context);
   const [openModal, setOpenModal] = useState(false);
 
-  const hasSelected = selectedRowKeys.length > 0;
+  const [hasSelected, setHasSelected] = useState(false);
 
   const handleOpenModal = () => {
     setOpenModal(true);
   };
   useEffect(() => {
     setDeleteCount(selectedRowKeys.length);
+    setHasSelected(selectedRowKeys.length > 0);
   }, [selectedRowKeys.length]);
 
   const confirmDeletes = async () => {
@@ -43,12 +44,12 @@ const HeadingPage = ({ title, refresh, selectedRowKeys }) => {
           data: { selectedRowKeys },
         });
         const { data } = response;
-        console.log(data);
         if (data.success) {
           setDeleteCount(0);
           setTimeout(() => {
             message("success", `Đã xóa ${data.deleteCount} bản ghi nhật ký`);
           }, 1000);
+          setHasSelected(false);
           refresh();
         } else {
           setTimeout(() => {

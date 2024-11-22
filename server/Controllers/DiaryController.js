@@ -109,7 +109,6 @@ const deleteDiary = async (req, res) => {
 };
 const deleteDiarys = async (req, res) => {
   const ids = req.body.selectedRowKeys;
-  console.log(ids);
   if (!Array.isArray(ids) || ids.length === 0) {
     return res.status(404).json({
       success: false,
@@ -118,7 +117,6 @@ const deleteDiarys = async (req, res) => {
   }
   try {
     const result = await Diary.deleteMany({ _id: { $in: ids } });
-    console.log(result);
     res.status(200).json({
       success: true,
       deleteCount: result.deletedCount,
